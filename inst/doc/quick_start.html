@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Quick Start: From Tree File to Publication Figure</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Quick Start: From Tree File to Publication
+Figure</h1>
+
+
+
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Install from local source package</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;path/to/Rclade_1.0.0.tar.gz&quot;</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">&quot;source&quot;</span>)</span></code></pre></div>
+</div>
+<div id="basic-usage" class="section level2">
+<h2>Basic Usage</h2>
+<p>The simplest way to create a timetree visualization using the
+built-in example data:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(Rclade)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># Load built-in example tree (50 tips, GTDB-style labels)</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">data</span>(example_tree)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co"># Plot with phylum-level collapsing (no timescale for speed)</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plot_timetree</span>(example_tree, <span class="at">rank =</span> <span class="st">&quot;phylum&quot;</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>                   <span class="at">taxonomy_format =</span> <span class="st">&quot;GTDB&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>                   <span class="at">add_timescale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;            Rclade: Phylogenetic Tree Visualization</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.225+08:00 | INFO     | Starting plot_timetree pipeline</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.225+08:00 | INFO     | Tree input               : phylo object</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.225+08:00 | INFO     | Rank                     : phylum</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.225+08:00 | INFO     | Layout                   : rectangular</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.226+08:00 | INFO     | Unit                     : auto</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.226+08:00 | INFO     | Step 1/7: Input validation and reading</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt;   --------------------------------------------------</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt;   &gt;&gt; Input Validation</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt;   --------------------------------------------------</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.226+08:00 | INFO     | Tips                     : 50</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.226+08:00 | INFO     | Internal nodes           : 49</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.226+08:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.227+08:00 | INFO     | Input validation passed</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.227+08:00 | INFO     | Timer &#39;input_reading&#39;: 1 ms</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.227+08:00 | INFO     | Step 2/7: Taxonomy parsing</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.227+08:00 | INFO     | Using rank-based taxonomy: phylum</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.231+08:00 | INFO     | Detected format          : GTDB</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.231+08:00 | INFO     | Groups found             : 5</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.231+08:00 | INFO     | Timer &#39;taxonomy_parsing&#39;: 4 ms</span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.231+08:00 | INFO     | Step 3/7: MRCA computation and monophyly check</span></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.231+08:00 | INFO     | Checking monophyly and computing MRCA for each group...</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.232+08:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.232+08:00 | INFO     | Valid MRCA nodes         : 5</span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.232+08:00 | INFO     | Timer &#39;mrca_computation&#39;: 1 ms</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.233+08:00 | INFO     | Step 4/7: Color generation</span></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.233+08:00 | INFO     | Color palette            : viridis</span></span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.233+08:00 | INFO     | Step 5/7: Tree rendering</span></span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a><span class="co">#&gt; ! # Invaild edge matrix for &lt;phylo&gt;. A &lt;tbl_df&gt; is returned.</span></span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a><span class="co">#&gt; ! # Invaild edge matrix for &lt;phylo&gt;. A &lt;tbl_df&gt; is returned.</span></span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.271+08:00 | INFO     | Collapsing 5 clades...</span></span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.282+08:00 | INFO     | Clade collapse complete</span></span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.286+08:00 | INFO     | Timer &#39;tree_rendering&#39;: 52 ms</span></span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.286+08:00 | INFO     | Step 6/7: Timescale integration</span></span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a><span class="co">#&gt;                       Pipeline Complete</span></span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.315+08:00 | INFO     |   Tips                        : 50</span></span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.315+08:00 | INFO     |   Groups parsed               : 5</span></span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.315+08:00 | INFO     |   Groups collapsed            : 5</span></span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.315+08:00 | INFO     |   Singleton groups            : 0</span></span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.315+08:00 | INFO     |   Skipped (non-monophyletic)  : 0</span></span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.315+08:00 | INFO     |   Skipped (root/zero-tip)     : 0</span></span>
+<span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.315+08:00 | INFO     |   Taxonomy format             : GTDB</span></span>
+<span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.316+08:00 | INFO     |   Layout                      : rectangular</span></span>
+<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.316+08:00 | INFO     |   Timescale                   : disabled</span></span>
+<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.316+08:00 | INFO     | plot_timetree completed successfully</span></span>
+<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a><span class="fu">print</span>(p)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="adding-titles" class="section level2">
+<h2>Adding Titles</h2>
+<p>Use <code>main_title</code> and <code>sub_title</code> to add
+centered titles:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plot_timetree</span>(example_tree, <span class="at">rank =</span> <span class="st">&quot;phylum&quot;</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                   <span class="at">taxonomy_format =</span> <span class="st">&quot;GTDB&quot;</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                   <span class="at">add_timescale =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                   <span class="at">main_title =</span> <span class="st">&quot;GTDB Bacterial Tree&quot;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>                   <span class="at">sub_title =</span> <span class="st">&quot;50 taxa | Phylum-level collapsing&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;            Rclade: Phylogenetic Tree Visualization</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.472+08:00 | INFO     | Starting plot_timetree pipeline</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.472+08:00 | INFO     | Tree input               : phylo object</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.472+08:00 | INFO     | Rank                     : phylum</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.473+08:00 | INFO     | Layout                   : rectangular</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.473+08:00 | INFO     | Unit                     : auto</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.473+08:00 | INFO     | Step 1/7: Input validation and reading</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;   --------------------------------------------------</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;   &gt;&gt; Input Validation</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt;   --------------------------------------------------</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.473+08:00 | INFO     | Tips                     : 50</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.473+08:00 | INFO     | Internal nodes           : 49</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.473+08:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.474+08:00 | INFO     | Input validation passed</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.474+08:00 | INFO     | Timer &#39;input_reading&#39;: 1 ms</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.474+08:00 | INFO     | Step 2/7: Taxonomy parsing</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.474+08:00 | INFO     | Using rank-based taxonomy: phylum</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.478+08:00 | INFO     | Detected format          : GTDB</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.478+08:00 | INFO     | Groups found             : 5</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.478+08:00 | INFO     | Timer &#39;taxonomy_parsing&#39;: 4 ms</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.478+08:00 | INFO     | Step 3/7: MRCA computation and monophyly check</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.478+08:00 | INFO     | Checking monophyly and computing MRCA for each group...</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.479+08:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.479+08:00 | INFO     | Valid MRCA nodes         : 5</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.479+08:00 | INFO     | Timer &#39;mrca_computation&#39;: 1 ms</span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.480+08:00 | INFO     | Step 4/7: Color generation</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.480+08:00 | INFO     | Color palette            : viridis</span></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.480+08:00 | INFO     | Step 5/7: Tree rendering</span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co">#&gt; ! # Invaild edge matrix for &lt;phylo&gt;. A &lt;tbl_df&gt; is returned.</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="co">#&gt; ! # Invaild edge matrix for &lt;phylo&gt;. A &lt;tbl_df&gt; is returned.</span></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.521+08:00 | INFO     | Collapsing 5 clades...</span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.532+08:00 | INFO     | Clade collapse complete</span></span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.532+08:00 | INFO     | Timer &#39;tree_rendering&#39;: 52 ms</span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.532+08:00 | INFO     | Step 6/7: Timescale integration</span></span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="co">#&gt;                       Pipeline Complete</span></span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.567+08:00 | INFO     |   Tips                        : 50</span></span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.567+08:00 | INFO     |   Groups parsed               : 5</span></span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.567+08:00 | INFO     |   Groups collapsed            : 5</span></span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.567+08:00 | INFO     |   Singleton groups            : 0</span></span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.567+08:00 | INFO     |   Skipped (non-monophyletic)  : 0</span></span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.567+08:00 | INFO     |   Skipped (root/zero-tip)     : 0</span></span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.567+08:00 | INFO     |   Taxonomy format             : GTDB</span></span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.567+08:00 | INFO     |   Layout                      : rectangular</span></span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.568+08:00 | INFO     |   Timescale                   : disabled</span></span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.568+08:00 | INFO     | plot_timetree completed successfully</span></span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="fu">print</span>(p)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="summarizing-results" class="section level2">
+<h2>Summarizing Results</h2>
+<p>Use <code>summarize_timetree()</code> to inspect the collapse
+metadata:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plot_timetree</span>(example_tree, <span class="at">rank =</span> <span class="st">&quot;phylum&quot;</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>                   <span class="at">taxonomy_format =</span> <span class="st">&quot;GTDB&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>                   <span class="at">add_timescale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;            Rclade: Phylogenetic Tree Visualization</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.741+08:00 | INFO     | Starting plot_timetree pipeline</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.741+08:00 | INFO     | Tree input               : phylo object</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.741+08:00 | INFO     | Rank                     : phylum</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.741+08:00 | INFO     | Layout                   : rectangular</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.741+08:00 | INFO     | Unit                     : auto</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.741+08:00 | INFO     | Step 1/7: Input validation and reading</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt;   --------------------------------------------------</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt;   &gt;&gt; Input Validation</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt;   --------------------------------------------------</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.742+08:00 | INFO     | Tips                     : 50</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.742+08:00 | INFO     | Internal nodes           : 49</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.742+08:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.742+08:00 | INFO     | Input validation passed</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.742+08:00 | INFO     | Timer &#39;input_reading&#39;: 1 ms</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.743+08:00 | INFO     | Step 2/7: Taxonomy parsing</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.743+08:00 | INFO     | Using rank-based taxonomy: phylum</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.747+08:00 | INFO     | Detected format          : GTDB</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.747+08:00 | INFO     | Groups found             : 5</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.747+08:00 | INFO     | Timer &#39;taxonomy_parsing&#39;: 4 ms</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.747+08:00 | INFO     | Step 3/7: MRCA computation and monophyly check</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.747+08:00 | INFO     | Checking monophyly and computing MRCA for each group...</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.748+08:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.748+08:00 | INFO     | Valid MRCA nodes         : 5</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.749+08:00 | INFO     | Timer &#39;mrca_computation&#39;: 1 ms</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.749+08:00 | INFO     | Step 4/7: Color generation</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.749+08:00 | INFO     | Color palette            : viridis</span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.749+08:00 | INFO     | Step 5/7: Tree rendering</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt; ! # Invaild edge matrix for &lt;phylo&gt;. A &lt;tbl_df&gt; is returned.</span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; ! # Invaild edge matrix for &lt;phylo&gt;. A &lt;tbl_df&gt; is returned.</span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.790+08:00 | INFO     | Collapsing 5 clades...</span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.802+08:00 | INFO     | Clade collapse complete</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.802+08:00 | INFO     | Timer &#39;tree_rendering&#39;: 53 ms</span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.802+08:00 | INFO     | Step 6/7: Timescale integration</span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co">#&gt;                       Pipeline Complete</span></span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="co">#&gt; ============================================================</span></span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.831+08:00 | INFO     |   Tips                        : 50</span></span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.831+08:00 | INFO     |   Groups parsed               : 5</span></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.831+08:00 | INFO     |   Groups collapsed            : 5</span></span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.831+08:00 | INFO     |   Singleton groups            : 0</span></span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.831+08:00 | INFO     |   Skipped (non-monophyletic)  : 0</span></span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.831+08:00 | INFO     |   Skipped (root/zero-tip)     : 0</span></span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.832+08:00 | INFO     |   Taxonomy format             : GTDB</span></span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.832+08:00 | INFO     |   Layout                      : rectangular</span></span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.832+08:00 | INFO     |   Timescale                   : disabled</span></span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a><span class="co">#&gt; 2026-09-16T00:09:27.832+08:00 | INFO     | plot_timetree completed successfully</span></span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a><span class="fu">summarize_timetree</span>(p)</span>
+<span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a><span class="co">#&gt; === Rclade Timetree Summary ===</span></span>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a><span class="co">#&gt; Input tips: 50</span></span>
+<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a><span class="co">#&gt; Groups parsed (total): 5</span></span>
+<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a><span class="co">#&gt; Groups collapsed: 5</span></span>
+<span id="cb4-61"><a href="#cb4-61" tabindex="-1"></a><span class="co">#&gt; Singleton groups (1 tip, not collapsed): 0</span></span>
+<span id="cb4-62"><a href="#cb4-62" tabindex="-1"></a><span class="co">#&gt; Skipped non-monophyletic groups: 0</span></span>
+<span id="cb4-63"><a href="#cb4-63" tabindex="-1"></a><span class="co">#&gt; Skipped groups (root/zero-tip): 0</span></span>
+<span id="cb4-64"><a href="#cb4-64" tabindex="-1"></a><span class="co">#&gt; Displayed leaves after collapse: 5</span></span>
+<span id="cb4-65"><a href="#cb4-65" tabindex="-1"></a><span class="co">#&gt; Taxonomy format: GTDB</span></span>
+<span id="cb4-66"><a href="#cb4-66" tabindex="-1"></a><span class="co">#&gt; Collapse rank: phylum</span></span>
+<span id="cb4-67"><a href="#cb4-67" tabindex="-1"></a><span class="co">#&gt; Palette: viridis</span></span>
+<span id="cb4-68"><a href="#cb4-68" tabindex="-1"></a><span class="co">#&gt; Layout: rectangular</span></span>
+<span id="cb4-69"><a href="#cb4-69" tabindex="-1"></a><span class="co">#&gt; Timescale: no</span></span>
+<span id="cb4-70"><a href="#cb4-70" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-71"><a href="#cb4-71" tabindex="-1"></a><span class="co">#&gt; Group details:</span></span>
+<span id="cb4-72"><a href="#cb4-72" tabindex="-1"></a><span class="co">#&gt;   P1                              n=10  node=54</span></span>
+<span id="cb4-73"><a href="#cb4-73" tabindex="-1"></a><span class="co">#&gt;   P2                              n=10  node=63</span></span>
+<span id="cb4-74"><a href="#cb4-74" tabindex="-1"></a><span class="co">#&gt;   P3                              n=10  node=72</span></span>
+<span id="cb4-75"><a href="#cb4-75" tabindex="-1"></a><span class="co">#&gt;   P4                              n=10  node=82</span></span>
+<span id="cb4-76"><a href="#cb4-76" tabindex="-1"></a><span class="co">#&gt;   P5                              n=10  node=91</span></span></code></pre></div>
+</div>
+<div id="saving-output" class="section level2">
+<h2>Saving Output</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Save to PDF</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">save_timetree</span>(p, <span class="st">&quot;output.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">14</span>, <span class="at">height =</span> <span class="dv">10</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># One-line pipeline</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># Note: the geological timescale requires an explicit branch-length unit</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># (Rclade does not infer units); pass unit = &quot;Ma&quot; or unit = &quot;Ga&quot;.</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="fu">plot_timetree</span>(example_tree, <span class="at">rank =</span> <span class="st">&quot;phylum&quot;</span>, <span class="at">unit =</span> <span class="st">&quot;Ga&quot;</span>, <span class="at">output =</span> <span class="st">&quot;output.pdf&quot;</span>)</span></code></pre></div>
+</div>
+<div id="taxonomy-quality-check" class="section level2">
+<h2>Taxonomy Quality Check</h2>
+<p>Before visualization, check how well your labels can be parsed:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">summarize_taxonomy_quality</span>(example_tree<span class="sc">$</span>tip.label, <span class="at">format =</span> <span class="st">&quot;GTDB&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; === Taxonomy Label Parsing Quality Report ===</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; Total labels: 50</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; Detected format: GTDB</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; Per-rank parse rates:</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt;   kingdom        0.0% (0/50) </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;   domain       100.0% (50/50) ====================</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;   phylum       100.0% (50/50) ====================</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt;   class        100.0% (50/50) ====================</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt;   order          0.0% (0/50) </span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;   family         0.0% (0/50) </span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt;   genus          0.0% (0/50) </span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt;   species        0.0% (0/50) </span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt;   subspecies     0.0% (0/50) </span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; All labels parsed successfully.</span></span></code></pre></div>
+</div>
+<div id="references-acknowledgments" class="section level2">
+<h2>References &amp; Acknowledgments</h2>
+<p>Rclade builds on the <strong>ggtree</strong> and
+<strong>deeptime</strong> R packages. If you use Rclade in published
+research, please cite Rclade along with these key dependencies:</p>
+<ul>
+<li>Yu G, Smith DK, Zhu H, Guan Y, Lam TT-Y (2017). “ggtree: an R
+package for visualization and annotation of phylogenetic trees with
+their covariates and other associated data.” <em>Methods in Ecology and
+Evolution</em>, 8(1), 28-36. <a href="doi:10.1111/2041-210X.12628" class="uri">doi:10.1111/2041-210X.12628</a></li>
+<li>Gearty W (2025). “deeptime: an R package that facilitates highly
+customizable and reproducible visualizations of data over geological
+time intervals.” <em>Big Earth Data</em>. <a href="doi:10.1080/20964471.2025.2537516" class="uri">doi:10.1080/20964471.2025.2537516</a></li>
+<li>Paradis E, Schliep K (2019). “ape 5.0: an environment for modern
+phylogenetics and evolutionary analyses in R.” <em>Bioinformatics</em>,
+35(3), 526-528. <a href="doi:10.1093/bioinformatics/bty633" class="uri">doi:10.1093/bioinformatics/bty633</a></li>
+</ul>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
